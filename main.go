@@ -13,9 +13,11 @@ import (
 	. "github.com/otiai10/copy"
 	"io/ioutil"
 	"os"
+	"os/signal"
 	"path"
 	"path/filepath"
 	"strings"
+	"syscall"
 )
 
 func main() {
@@ -34,6 +36,8 @@ func checkGolangDep() (output string, perfdata PerfdataCollection, errs map[stri
 	if len(os.Args) != 3 {
 		return "", nil, map[string]error{"Usage": errors.New(os.Args[0] + " GO_PACKAGE CACHE_DIR")}
 	}
+
+	signal.Ignore(syscall.SIGTERM)
 
 	var project1 loadProjectAsyncOut
 	var project2 updateAndLoadCopyOut
