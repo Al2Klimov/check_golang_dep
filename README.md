@@ -18,8 +18,8 @@ have been updated compared to [Gopkg.lock].
 
 ## Usage
 
-check\_golang\_dep takes two positional CLI arguments
-and no environment variables:
+The [plug-and-play binaries]
+take two positional CLI arguments and no environment variables:
 
 ```
 $ ./check_golang_dep GO_PACKAGE CACHE_DIR
@@ -81,6 +81,7 @@ as well as a [service template] and [host example] for [Icinga 2].
 [go]: https://golang.org/cmd/go/
 [git]: https://git-scm.com/
 [dep]: https://golang.github.io/dep/
+[plug-and-play binaries]: https://github.com/Al2Klimov/check_golang_dep/releases
 [Nagio$ check plugin API]: https://nagios-plugins.org/doc/guidelines.html#AEN78
 [check command definition]: ./icinga2/check_golang_dep.conf
 [service template]: ./icinga2/check_golang_dep-service.conf
