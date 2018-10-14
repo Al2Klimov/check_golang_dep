@@ -190,7 +190,7 @@ func cacheProject(ch chan cacheProjectOut) {
 		return
 	}
 
-	if cmd, _, err := System("dep", []string{"ensure"}, goCmdEnv, pkgDir); err != nil {
+	if cmd, _, err := System("dep", []string{"ensure", "-vendor-only"}, goCmdEnv, pkgDir); err != nil {
 		ch <- cacheProjectOut{errs: map[string]error{cmd: err}}
 		return
 	}
