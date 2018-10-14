@@ -82,8 +82,6 @@ export GOPATH="$(pwd)/go"
 mkdir -p go/src/git.example.com/toni
 cd go/src/git.example.com/toni
 
-sleep 1
-
 for cat in {lol,grumpy}cat; do
 	while ! git clone http://git.example.com/toni/$cat.git; do
 		sleep 1
