@@ -4,6 +4,11 @@ The check plugin **check\_golang\_dep** monitors
 whether any dependencies of a [Golang][golang] [package][go-pkg]
 have been updated compared to [Gopkg.lock].
 
+## Demonstration
+
+1. `$ docker run -itp 8080:80 grandmaster/check_golang_dep`
+2. Open http://localhost:8080 and navigate to any service
+
 ## Requirements
 
 * a \*nix-like OS
