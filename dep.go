@@ -104,6 +104,7 @@ func diffProjects(lhs, rhs *dep.Project) (diff string, perfdata PerfdataCollecti
 	oldDeps := 0
 	newDeps := 0
 	updatedDeps := 0
+	updatedVersions := 0
 
 	for _, id := range orderedChangedDeps {
 		dep := dependencies[id]
@@ -117,6 +118,10 @@ func diffProjects(lhs, rhs *dep.Project) (diff string, perfdata PerfdataCollecti
 		} else {
 			fmt.Fprintf(buf, "- %s @ %s\n+ %s @ %s\n", id, dep.lhs, id, dep.rhs)
 			updatedDeps++
+
+			if dep.lhs.version != dep.rhs.version {
+				updatedVersions++
+			}
 		}
 	}
 
@@ -129,6 +134,12 @@ func diffProjects(lhs, rhs *dep.Project) (diff string, perfdata PerfdataCollecti
 		Perfdata{
 			Label: "updated",
 			Value: float64(updatedDeps),
+			Warn:  OptionalThreshold{true, true, 1.0, posInf},
+			Min:   OptionalNumber{true, 0.0},
+		},
+		Perfdata{
+			Label: "updated_tags",
+			Value: float64(updatedVersions),
 			Crit:  OptionalThreshold{true, true, 1.0, posInf},
 			Min:   OptionalNumber{true, 0.0},
 		},
