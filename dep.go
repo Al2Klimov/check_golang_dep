@@ -41,7 +41,7 @@ type loadProjectAsyncOut struct {
 	err     error
 }
 
-func loadProjectAsync(dir, goPath string, ch chan loadProjectAsyncOut) {
+func loadProjectAsync(dir, goPath string, ch chan<- loadProjectAsyncOut) {
 	project, err := loadProject(dir, goPath)
 	ch <- loadProjectAsyncOut{project, err}
 }

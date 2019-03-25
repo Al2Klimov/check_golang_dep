@@ -141,7 +141,7 @@ type cacheProjectOut struct {
 	errs           map[string]error
 }
 
-func cacheProject(ch chan cacheProjectOut) {
+func cacheProject(ch chan<- cacheProjectOut) {
 	cacheDir := os.Args[2]
 
 	if errMA := os.MkdirAll(cacheDir, 0700); errMA != nil {
@@ -203,7 +203,7 @@ type prepareSandboxOut struct {
 	errs           map[string]error
 }
 
-func prepareSandbox(ch chan prepareSandboxOut) {
+func prepareSandbox(ch chan<- prepareSandboxOut) {
 	tmpDir, errTD := ioutil.TempDir("", "")
 	if errTD != nil {
 		ch <- prepareSandboxOut{errs: map[string]error{FormatCmd("mktemp", []string{"-d"}, nil): errTD}}
@@ -225,7 +225,7 @@ type updateAndLoadCopyOut struct {
 	errs    map[string]error
 }
 
-func updateAndLoadCopy(pkgDir, goPath string, sandbox prepareSandboxOut, ch chan updateAndLoadCopyOut) {
+func updateAndLoadCopy(pkgDir, goPath string, sandbox prepareSandboxOut, ch chan<- updateAndLoadCopyOut) {
 	if errCp := Copy(goPath, sandbox.goPath); errCp != nil {
 		ch <- updateAndLoadCopyOut{errs: map[string]error{FormatCmd("cp", []string{"-r", goPath, sandbox.goPath}, nil): errCp}}
 		return
