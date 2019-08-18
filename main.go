@@ -149,7 +149,7 @@ func cacheProject(ch chan<- cacheProjectOut) {
 		return
 	}
 
-	var goPath string
+	var goPath, goCache string
 
 	{
 		realPath, errES := filepath.EvalSymlinks(cacheDir)
@@ -159,10 +159,11 @@ func cacheProject(ch chan<- cacheProjectOut) {
 		}
 
 		goPath = path.Join(realPath, "go")
+		goCache = path.Join(realPath, "go-cache")
 	}
 
 	goPkg := os.Args[1]
-	goCmdEnv := map[string]string{"LC_ALL": "C", "PATH": os.Getenv("PATH"), "GOPATH": goPath}
+	goCmdEnv := map[string]string{"LC_ALL": "C", "PATH": os.Getenv("PATH"), "GOPATH": goPath, "GOCACHE": goCache}
 
 	if cmd, _, err := System("go", []string{"get", "-d", "-insecure", "-u", goPkg}, goCmdEnv, "/"); err != nil {
 		ch <- cacheProjectOut{errs: map[string]error{cmd: err}}
