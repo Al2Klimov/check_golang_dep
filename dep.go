@@ -7,6 +7,7 @@ import (
 	"github.com/golang/dep"
 	"github.com/golang/dep/gps"
 	"github.com/golang/dep/gps/verify"
+	"html"
 	"log"
 	"math"
 	"sort"
@@ -110,13 +111,21 @@ func diffProjects(lhs, rhs *dep.Project) (diff string, perfdata PerfdataCollecti
 		dep := dependencies[id]
 
 		if dep.lhs == (revision{}) {
-			fmt.Fprintf(buf, "+ %s @ %s\n", id, dep.rhs)
+			fmt.Fprintf(buf, `<p style="color: #070;">+ %s @ %s</p>`, html.EscapeString(id), html.EscapeString(dep.rhs.String()))
 			newDeps++
 		} else if dep.rhs == (revision{}) {
-			fmt.Fprintf(buf, "- %s @ %s\n", id, dep.lhs)
+			fmt.Fprintf(buf, `<p style="color: #700;">- %s @ %s</p>`, html.EscapeString(id), html.EscapeString(dep.lhs.String()))
 			oldDeps++
 		} else {
-			fmt.Fprintf(buf, "- %s @ %s\n+ %s @ %s\n", id, dep.lhs, id, dep.rhs)
+			fmt.Fprintf(
+				buf,
+				`<p><span style="color: #700;">- %s @ %s</span><br><span style="color: #070;">+ %s @ %s</span></p>`,
+				html.EscapeString(id),
+				html.EscapeString(dep.lhs.String()),
+				html.EscapeString(id),
+				html.EscapeString(dep.rhs.String()),
+			)
+
 			updatedDeps++
 
 			if dep.lhs.version != dep.rhs.version {

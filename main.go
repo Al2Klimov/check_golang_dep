@@ -127,9 +127,9 @@ func checkGolangDep() (output string, perfdata PerfdataCollection, errs map[stri
 		output, perfdata = diffProjects(project1.project, project2.project)
 
 		if output == "" {
-			output = "Everything is up-to-date"
+			output = "<p>Everything is up-to-date</p>"
 		} else {
-			output = "Some dependencies aren't up-to-date!\n\n" + output + "\n"
+			output = "<p><b>Some dependencies aren't up-to-date!</b></p>\n\n" + output
 		}
 	}
 
